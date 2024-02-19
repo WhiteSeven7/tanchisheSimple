@@ -20,6 +20,7 @@ class BaseGame(ABC):
         pygame.font.init()
         pygame.mixer.init()
         self.surface = pygame.display.set_mode(SIZE)
+        pygame.display.set_icon(pygame.image.load(r'res\image\1.png'))
         self.clock = pygame.time.Clock()
         pygame.display.set_caption("贪吃蛇街机风")
         self.quit = False
@@ -171,7 +172,7 @@ class Game(BaseGame):
         # 背景颜色
         self.surface.fill(LIGHT_GREEN)
         # 游戏和底部分数的分界线
-        pygame.draw.line(self.surface, DARK_GREEN, (0, GAME_HEIGHT + 3), (WIDTH, GAME_HEIGHT + 3), 6)
+        pygame.draw.line(self.surface, DARK_GREEN, (0, GAME_HEIGHT + 3), (WIDTH, GAME_HEIGHT + 3), 7)
         if self.fail:
             self.fail_menu.draw(self.surface)
         elif self.pause:
