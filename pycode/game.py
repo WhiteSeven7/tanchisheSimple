@@ -5,16 +5,8 @@ from typing import Callable
 import pygame
 from .data import *
 from .level import Level
-
-from .game_obj.snack import Snack
-from .game_obj.apple import AppleSys, Apple
-from .game_obj.wall import WallSys
-from .info import Info
-from .menu.fail_menu import FailMenu
-from .menu.pause_menu import PauseMenu
+from .menu.main_menu import MainMenu
 from .sound_sys import SoundSys
-from .free_tail import FreeTail
-
 
 class BaseGame(ABC):
     def __init__(self) -> None:
@@ -77,13 +69,19 @@ class Game(BaseGame):
         super().__init__()
         self.max_score = self.load_data()
         # 是在游戏还是菜单
-        self.level_running = True
-        self.level = Level(self)
+        self.level_running = False
+        # 声音管理
+        self.sound_sys = SoundSys()
+        self.sound_sys.set_bg(self.level_running)
 
+        self.level = Level(self, self.sound_sys)
+        self.main_menu = MainMenu(self)
 
     def control(self):
         event_control: Callable[[pygame.event.Event], None] = (
-            self.level.event_control if self.level_running else None
+            self.level.event_control
+            if self.level_running
+            else self.main_menu.event_control
         )
         event: pygame.event.Event
         for event in pygame.event.get():
@@ -91,19 +89,9 @@ class Game(BaseGame):
                 self.quit = True
                 continue
             event_control(event)
-            # elif event.type == pygame.KEYDOWN:
-            #     if self.fail:
-            #         if event.key == pygame.K_SPACE:
-            #         # 输的状态重启游戏
-            #             self.reset()
-            #     elif event.key in (pygame.K_SPACE, pygame.K_ESCAPE):
-            #         self.set_pause(not self.pause)
         if self.level_running and self.level.need_keys():
             keys: list[bool] = pygame.key.get_pressed()
             self.level.keys_control(keys)
-        # if not self.fail:
-        #     keys = pygame.key.get_pressed()
-        #     self.snack.control(keys)
 
 
     def draw(self):
@@ -114,6 +102,8 @@ class Game(BaseGame):
         if self.level_running:
             # 游戏运行时,绘制
             self.level.draw(self.surface)
+        else:
+            self.main_menu.draw(self.surface)
         # 更新画面 flip
         super().draw()
 
@@ -128,3 +118,12 @@ class Game(BaseGame):
             self.level.update()
         return super().update()
     
+
+    def entry_level(self):
+        """开始游戏"""
+        self.level_running = True
+        self.level.reset()
+
+    
+    def quit_level(self):
+        self.level_running = False

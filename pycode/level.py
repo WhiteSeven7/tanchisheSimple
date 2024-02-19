@@ -12,7 +12,7 @@ from .free_tail import FreeTail
 
 
 class Level:
-    def __init__(self, game) -> None:
+    def __init__(self, game, sound_sys: SoundSys) -> None:
         self._game = game
         self.score = 0
         # 影响控制和update
@@ -24,7 +24,6 @@ class Level:
 
         self.info = Info(self._game.max_score)
         self.fail_menu = FailMenu()
-        self.sound_sys = SoundSys()
         # 用于在生成苹果时，拿到空位置
         self.free_tail = FreeTail(self.wall_sys, self.apple_sys, self.snack.body)
 
@@ -32,8 +31,8 @@ class Level:
         # 暂停游戏
         self.pause = False
         self.pause_menu = PauseMenu()
-        # 本关的最高分
-
+        # 声音管理系统
+        self.sound_sys = sound_sys
 
 
     def snack_eat_apple(self):
