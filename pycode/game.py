@@ -89,9 +89,12 @@ class Game(BaseGame):
                 self.quit = True
                 continue
             event_control(event)
-        if self.level_running and self.level.need_keys():
+        if self.level_running:
             keys: list[bool] = pygame.key.get_pressed()
             self.level.keys_control(keys)
+        else:
+            # TODO level没有运行时的控制
+            ...
 
 
     def draw(self):
@@ -108,9 +111,9 @@ class Game(BaseGame):
         super().draw()
 
 
-    def safe_quit(self):
-        self.save_data()
-        return super().safe_quit()
+    # def safe_quit(self):
+    #     self.save_data()
+    #     return super().safe_quit()
 
 
     def update(self):
@@ -126,4 +129,5 @@ class Game(BaseGame):
 
     
     def quit_level(self):
+        """结束游戏"""
         self.level_running = False

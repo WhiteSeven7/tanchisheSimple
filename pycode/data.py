@@ -3,6 +3,7 @@ UP = Vector2(0, -1)
 DOWN = Vector2(0, 1)
 LEFT = Vector2(-1, 0)
 RIGHT = Vector2(1, 0)
+DIRECTIONS = UP, DOWN, LEFT, RIGHT
 
 BODY_SIZE = 38
 TILE_SIZE = 50

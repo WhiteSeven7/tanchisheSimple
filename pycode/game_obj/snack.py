@@ -103,4 +103,7 @@ class Snack:
 
     @staticmethod
     def get_dirction(body: deque[Vector2]) -> Vector2:
-        return body[0] - body[1]
+        direction = body[0] - body[1]
+        for dir in DIRECTIONS:
+            if dir == direction:
+                return dir

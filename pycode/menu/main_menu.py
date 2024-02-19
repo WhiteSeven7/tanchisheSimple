@@ -19,7 +19,7 @@ class MainMenu:
 
 
     def _init_label(self):
-        self.title_image = self.font.render("贪吃蛇街机风", False, DARK_GREEN)
+        self.title_image = self.font.render("贪吃蛇街机风", True, DARK_GREEN)
         self.title_rect = self.title_image.get_rect(center=(WIDTH / 2, GAME_HEIGHT / 4))
 
 

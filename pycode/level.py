@@ -23,14 +23,14 @@ class Level:
         self.wall_sys = WallSys()
 
         self.info = Info(self._game.max_score)
-        self.fail_menu = FailMenu()
+        self.fail_menu = FailMenu(self, self._game)
         # 用于在生成苹果时，拿到空位置
         self.free_tail = FreeTail(self.wall_sys, self.apple_sys, self.snack.body)
 
         self.apple_sys.set_free_tail(self.free_tail)
         # 暂停游戏
         self.pause = False
-        self.pause_menu = PauseMenu()
+        self.pause_menu = PauseMenu(self, self._game)
         # 声音管理系统
         self.sound_sys = sound_sys
 
@@ -133,17 +133,23 @@ class Level:
         """处理单个event事件"""
         if event.type == pygame.KEYDOWN:
             if self.fail:
-                if event.key == pygame.K_SPACE:
-                # 输的状态重启游戏
-                    self.reset()
-            elif event.key in (pygame.K_SPACE, pygame.K_ESCAPE):
-                self.set_pause(not self.pause)
+                # self.fail_menu.event_key_control(event.key)
+                ...
+            elif self.pause:
+                self.pause_menu.event_key_control(event.key)
+            else:
+                # self.snack.control(event.key)
+                if event.key in (pygame.K_ESCAPE, pygame.K_SPACE):
+                    self.set_pause(True)
 
     
     def keys_control(self, keys: list[bool])-> None:
         """处理按键状态"""
-        if not self.fail:
-            keys = pygame.key.get_pressed()
+        if self.fail:
+            self.fail_menu.key_control(keys)
+        elif self.pause:
+            ...
+        else:
             self.snack.control(keys)
 
 

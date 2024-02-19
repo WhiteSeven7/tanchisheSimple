@@ -11,7 +11,7 @@ class Button(ABC):
 
     def _set_image_rect(self, text: str, pos: tuple[int, int]):
         border = 6
-        text_image = self.font.render(text, False, DARK_GREEN, LIGHT_GREEN)
+        text_image = self.font.render(text, True, DARK_GREEN, LIGHT_GREEN)
         self.rect = text_image.get_rect(center=pos).inflate(2 * border, 2 * border)
         self.image = pygame.Surface(self.rect.size)
         self.image.blit(text_image, (border, border))
