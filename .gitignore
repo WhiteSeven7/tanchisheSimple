@@ -1,0 +1,7 @@
+打包.txt
+*.spec
+*.pyc
+test.*
+
+build
+dist
