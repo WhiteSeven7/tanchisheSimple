@@ -9,9 +9,9 @@ class FailMenu:
         本次得分：{}，最高分：{}
         <- 重开     主菜单 ->
         """
-        self.big_font = pygame.font.Font(r'res\font\SmileySans-Oblique-3.otf', 75)
-        self.font = pygame.font.Font(r'res\font\SmileySans-Oblique-3.otf', 60)
-        self.small_font = pygame.font.Font(r'res\font\SmileySans-Oblique-3.otf', 45)
+        self.big_font = pygame.font.Font(r'res\font\SmileySans-Oblique-3.otf', 80)
+        self.font = pygame.font.Font(r'res\font\SmileySans-Oblique-3.otf', 55)
+        # self.small_font = pygame.font.Font(r'res\font\SmileySans-Oblique-3.otf', 30)
         self._init_image_rect()
 
         self._level = level
@@ -33,8 +33,8 @@ class FailMenu:
         images: list[pygame.Surface] = [
             self.big_font.render('你输了',True, DARK_GREEN),
             self.font.render(f'本次得分：{1}，最高分：{1}',True, DARK_GREEN),
-            self.small_font.render('<- 重开',True, DARK_GREEN),
-            self.small_font.render('主菜单 ->',True, DARK_GREEN),
+            self.font.render('<- 重开',True, DARK_GREEN),
+            self.font.render('主菜单 ->',True, DARK_GREEN),
         ]
         rects: list[pygame.Rect] = [
             images[0].get_rect(center=(WIDTH / 2, GAME_HEIGHT / 6)),
@@ -44,11 +44,11 @@ class FailMenu:
         ]
         self.image_rect_list = list(zip(images, rects))
 
-
-    def key_control(self, keys: list[bool])-> None:
+    
+    def event_key_control(self, key: int) -> None:
         """处理 <- 和 -> """
-        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+        if key in (pygame.K_LEFT, pygame.K_a):
             self._level.reset()
-        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+        elif key in (pygame.K_RIGHT, pygame.K_d):
             self._game.quit_level()
         

@@ -133,7 +133,7 @@ class Level:
         """处理单个event事件"""
         if event.type == pygame.KEYDOWN:
             if self.fail:
-                # self.fail_menu.event_key_control(event.key)
+                self.fail_menu.event_key_control(event.key)
                 ...
             elif self.pause:
                 self.pause_menu.event_key_control(event.key)
@@ -141,16 +141,8 @@ class Level:
                 # self.snack.control(event.key)
                 if event.key in (pygame.K_ESCAPE, pygame.K_SPACE):
                     self.set_pause(True)
-
-    
-    def keys_control(self, keys: list[bool])-> None:
-        """处理按键状态"""
-        if self.fail:
-            self.fail_menu.key_control(keys)
-        elif self.pause:
-            ...
-        else:
-            self.snack.control(keys)
+                else:
+                    self.snack.event_key_control(event.key)
 
 
     def need_keys(self)-> None:

@@ -4,7 +4,7 @@ from .data import *
 class Info(pygame.sprite.Sprite):
     "得分：{}      最高分：{}"
     def __init__(self, max_score) -> None:
-        self.font = pygame.font.Font(r'res\font\SmileySans-Oblique-3.otf', 60)
+        self.font = pygame.font.Font(r'res\font\SmileySans-Oblique-3.otf', 55)
         self._set_score(0)
         self._set_max_score(max_score)
 

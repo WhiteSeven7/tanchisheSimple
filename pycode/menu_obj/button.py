@@ -10,11 +10,19 @@ class Button(ABC):
         self._set_image_rect(text, pos)
 
     def _set_image_rect(self, text: str, pos: tuple[int, int]):
+        # 内边距
+        padding = 6
+        # 边框宽度
         border = 6
-        text_image = self.font.render(text, True, DARK_GREEN, LIGHT_GREEN)
-        self.rect = text_image.get_rect(center=pos).inflate(2 * border, 2 * border)
+        text_image = self.font.render(text, True, DARK_GREEN)
+        self.rect = (
+            text_image.get_rect(center=pos)
+            .inflate(2 * (border + padding), 2 * (border + padding))
+        )
         self.image = pygame.Surface(self.rect.size)
-        self.image.blit(text_image, (border, border))
+        self.image.fill(LIGHT_GREEN)
+        pygame.draw.rect(self.image, DARK_GREEN, ((0, 0), self.rect.size), border)
+        self.image.blit(text_image, (border + padding, border + padding))
 
     
     def draw(self, surface: pygame.Surface)-> None:

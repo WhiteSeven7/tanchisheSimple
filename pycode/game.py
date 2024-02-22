@@ -78,23 +78,15 @@ class Game(BaseGame):
         self.main_menu = MainMenu(self)
 
     def control(self):
-        event_control: Callable[[pygame.event.Event], None] = (
-            self.level.event_control
-            if self.level_running
-            else self.main_menu.event_control
-        )
         event: pygame.event.Event
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.quit = True
                 continue
-            event_control(event)
-        if self.level_running:
-            keys: list[bool] = pygame.key.get_pressed()
-            self.level.keys_control(keys)
-        else:
-            # TODO level没有运行时的控制
-            ...
+            if self.level_running:
+                self.level.event_control(event)
+            else:
+                self.main_menu.event_control(event)
 
 
     def draw(self):

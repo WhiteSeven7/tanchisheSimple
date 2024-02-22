@@ -13,7 +13,7 @@ class Snack:
         self.grow: bool = False
         # 按照固定的时间运动
         self.time_lock = 0
-        self.MOVE_COOL = 300
+        self.MOVE_COOL = 225
 
         # 防止多重转弯bug
         self.used_face = self.dirction
@@ -28,21 +28,6 @@ class Snack:
                 BODY_SIZE
             )
             pygame.draw.rect(surface, DARK_GREEN, rect, border_radius=5)
-
-
-    def control(self, keys: list[bool]):
-        # 左
-        if (keys[pygame.K_LEFT] or keys[pygame.K_a]) and self.used_face is not RIGHT:
-            self.dirction = LEFT
-        # 右
-        elif (keys[pygame.K_RIGHT] or keys[pygame.K_d]) and self.used_face is not LEFT:
-            self.dirction = RIGHT
-        # 上
-        if (keys[pygame.K_UP] or keys[pygame.K_w]) and self.used_face is not DOWN:
-            self.dirction = UP
-        # 下
-        elif (keys[pygame.K_DOWN] or keys[pygame.K_s]) and self.used_face is not UP:
-            self.dirction = DOWN
 
 
     def update(self):
@@ -107,3 +92,18 @@ class Snack:
         for dir in DIRECTIONS:
             if dir == direction:
                 return dir
+            
+    
+    def event_key_control(self, key: int) -> None:
+        # 左
+        if key in (pygame.K_LEFT, pygame.K_a) and self.used_face is not RIGHT:
+            self.dirction = LEFT
+        # 右
+        elif key in (pygame.K_RIGHT, pygame.K_d) and self.used_face is not LEFT:
+            self.dirction = RIGHT
+        # 上
+        elif key in (pygame.K_UP, pygame.K_w) and self.used_face is not DOWN:
+            self.dirction = UP
+        # 下
+        elif key in (pygame.K_DOWN, pygame.K_s) and self.used_face is not UP:
+            self.dirction = DOWN
