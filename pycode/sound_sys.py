@@ -15,14 +15,14 @@ class SoundSys:
         # 创建音效轨道
         self.channel = pygame.mixer.Channel(0)
         # 设置音效轨道音量
-        self.channel.set_volume(0.9)
+        self.channel.set_volume(0.6)
 
     def _init_bg(self):
         """初始化背景音乐"""
         # 打开音乐文件
         pygame.mixer.music.load(r'res\sound\Funky Stars - Quazar.mp3')
         # 设置音量
-        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.set_volume(0.3)
         # 循环播放
         pygame.mixer.music.play(-1)
 
